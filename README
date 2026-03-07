@@ -1,0 +1,159 @@
+# Smart File Organizer
+
+**Smart File Organizer** is a lightweight desktop application that automatically organizes messy folders into structured categories such as **Images, Videos, Documents, Archives, and more**.
+
+The application is designed to help users quickly clean up disorganized directories with a **simple one-click interface**.
+
+Developed using **Python and PySide6**, the software provides a fast and user-friendly way to manage files efficiently.
+
+---
+
+## Features
+
+• Automatically organizes files into categorized folders
+• Simple and intuitive graphical interface
+• Splash screen support for better user experience
+• Lightweight and fast performance
+• One-click folder organization
+• Desktop installer for easy installation
+
+---
+
+## Versions
+
+This repository contains **two versions of the application**.
+
+### Free Version
+
+The free version includes the core functionality of the software.
+
+Features:
+
+• Organize files into categories automatically
+• Select folder and organize files with one click
+• Clean and simple GUI
+• Windows installer available
+
+This version will remain **free and stable without further updates**.
+
+---
+
+### Pro Version
+
+The **Pro Version** includes advanced features and cross-platform builds.
+
+Features:
+
+• License key activation system
+• Improved file organization features
+• Windows installer
+• macOS build support
+• Automated build and release using GitHub Actions
+
+The Pro version is automatically built and released using a **CI/CD pipeline**.
+
+---
+
+## Project Structure
+
+```
+smart-file-organizer
+│
+├── free
+│   ├── smartfile_organizer_free.py
+│   └── app.png
+│
+├── pro
+│   ├── smartfile_organizer_pro.py
+│   └── app.png
+│
+├── installer_assets
+│   ├── LICENSE.txt
+│   └── app.ico
+│
+├── requirements.txt
+│
+└── .github
+    └── workflows
+        └── pro_release.yml
+```
+
+---
+
+## Installation
+
+### Windows
+
+1. Download the latest installer from the **Releases** section.
+2. Run the installer.
+3. Launch **Smart File Organizer** from the Start Menu or Desktop.
+
+---
+
+## How It Works
+
+1. Open the application.
+2. Select the folder you want to organize.
+3. Click **Organize Files**.
+4. The application automatically categorizes files into appropriate folders.
+
+Example categories:
+
+• Images
+• Videos
+• Documents
+• Archives
+• Others
+
+---
+
+## Technologies Used
+
+Python
+PySide6 (Qt for Python)
+PyInstaller
+Inno Setup Compiler
+GitHub Actions (CI/CD)
+
+---
+
+## Automated Build Pipeline
+
+The Pro version uses **GitHub Actions** to automate the build and release process.
+
+Pipeline steps include:
+
+• Installing dependencies
+• Building executable using PyInstaller
+• Creating Windows installer using Inno Setup
+• Building macOS version
+• Publishing release automatically to GitHub
+
+---
+
+## Author
+
+The DevOps Rite
+Creator of **The DevOps Rite**
+
+GitHub: https://github.com/TheDevOpsRite
+
+---
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+## Contributing
+
+Contributions, suggestions, and improvements are welcome.
+
+If you find a bug or have a feature request, please open an **Issue** in this repository.
+
+---
+
+## Support
+
+If you like this project, consider giving it a ⭐ on GitHub.

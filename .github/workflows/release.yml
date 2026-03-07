@@ -1,0 +1,152 @@
+name: Build and Release Smart File Organizer
+
+on:
+    push:
+        tags:
+            - "v*"
+
+permissions:
+    contents: write
+
+jobs:
+    # --------------------------------
+    # WINDOWS BUILD
+    # --------------------------------
+
+    build-windows:
+        runs-on: windows-latest
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Setup Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.11"
+
+            - name: Install Dependencies
+              run: |
+                  pip install -r requirements.txt
+
+            - name: Install PyInstaller
+              run: pip install pyinstaller
+
+            - name: Build Free Version
+              run: |
+                  pyinstaller free/smartfile_organizer_free.py --onefile --windowed --name smart_file_organizer
+
+            - name: Build Pro Version
+              run: |
+                  pyinstaller pro/smartfile_organizer_pro.py --onefile --windowed --name smart_file_organizer_pro
+
+            - name: Install Inno Setup
+              run: choco install innosetup -y
+
+            - name: Build Free Installer
+              run: |
+                  iscc free/smart_file_organizer_free.iss
+
+            - name: Build Pro Installer
+              run: |
+                  iscc pro/smart_file_organizer_pro.iss
+
+            - name: Upload Windows Installers
+              uses: actions/upload-artifact@v4
+              with:
+                  name: windows-installers
+                  path: |
+                      free/Output/*.exe
+                      pro/Output/*.exe
+
+    # --------------------------------
+    # MAC BUILD
+    # --------------------------------
+
+    build-macos:
+        runs-on: macos-latest
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Setup Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.11"
+
+            - name: Install Dependencies
+              run: |
+                  pip install -r requirements.txt
+                  pip install pyinstaller
+
+            - name: Build Free macOS App
+              run: |
+                  pyinstaller free/smartfile_organizer_free.py \
+                  --windowed \
+                  --name SmartFileOrganizerFree
+
+            - name: Build Pro macOS App
+              run: |
+                  pyinstaller pro/smartfile_organizer_pro.py \
+                  --windowed \
+                  --name SmartFileOrganizerPro
+
+            - name: Install create-dmg
+              run: brew install create-dmg
+
+            - name: Create Free DMG
+              run: |
+                  create-dmg \
+                  --volname "Smart File Organizer Free" \
+                  --window-size 500 300 \
+                  --icon-size 100 \
+                  --app-drop-link 400 150 \
+                  SmartFileOrganizerFree.dmg \
+                  dist/SmartFileOrganizerFree.app
+
+            - name: Create Pro DMG
+              run: |
+                  create-dmg \
+                  --volname "Smart File Organizer Pro" \
+                  --window-size 500 300 \
+                  --icon-size 100 \
+                  --app-drop-link 400 150 \
+                  SmartFileOrganizerPro.dmg \
+                  dist/SmartFileOrganizerPro.app
+
+            - name: Upload Mac Artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: mac-installers
+                  path: |
+                      SmartFileOrganizerFree.dmg
+                      SmartFileOrganizerPro.dmg
+
+    # --------------------------------
+    # RELEASE JOB
+    # --------------------------------
+
+    release:
+        needs: [build-windows, build-macos]
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Download Windows Artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  name: windows-installers
+                  path: windows
+
+            - name: Download Mac Artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  name: mac-installers
+                  path: mac
+
+            - name: Create GitHub Release
+              uses: softprops/action-gh-release@v2
+              with:
+                  files: |
+                      windows/**/*.exe
+                      mac/**/*.dmg
