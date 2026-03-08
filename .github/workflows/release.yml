@@ -45,11 +45,11 @@ jobs:
 
             - name: Build Free Installer
               run: |
-                  iscc free/smart_file_organizer_free.iss
+                  iscc free/smartfile_organizer_free.iss
 
             - name: Build Pro Installer
               run: |
-                  iscc pro/smart_file_organizer_pro.iss
+                  iscc pro/smartfile_organizer_pro.iss
 
             - name: Upload Windows Installers
               uses: actions/upload-artifact@v4
