@@ -147,6 +147,21 @@ jobs:
             - name: Create GitHub Release
               uses: softprops/action-gh-release@v2
               with:
-                  files: |
-                      windows/**/*.exe
-                      mac/**/*.dmg
+                body: |
+                  🚀 Smart File Organizer v${{ github.ref_name }}
+
+                  Smart File Organizer automatically organizes files into their respective categories such as Images, Videos, Documents, and more.
+
+                  📦 Downloads:
+                  • Windows users should download the `.exe` free/pro installer.
+                  • macOS users should download the `.dmg` free/pro installer.
+
+                  ⚡ Installation:
+                  1. Download the installer for your platform.
+                  2. Run the installer.
+                  3. Launch Smart File Organizer and select the folder you want to organize.
+
+                  Built automatically using GitHub Actions CI/CD.
+                files: |
+                    windows/**/*.exe
+                    mac/**/*.dmg
